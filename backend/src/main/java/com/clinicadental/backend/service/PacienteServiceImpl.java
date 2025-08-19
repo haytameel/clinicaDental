@@ -5,10 +5,10 @@ import com.clinicadental.backend.model.Paciente;
 import com.clinicadental.backend.repository.PacienteRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Primary;
-import org.springframework.data.jpa.repository.Query;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
+import java.util.Optional;
 
 @Service
 @Primary
@@ -23,8 +23,9 @@ public  class PacienteServiceImpl implements PacienteService {
     }
 
     @Override
-    public Paciente getPacienteById(Long id) {
-        return pacienteRepository.findById(id).orElse(null);
+    public Optional<Paciente> getPacienteById(String id) {
+        System.out.println("id: "+id);
+        return Optional.ofNullable(pacienteRepository.findById(id).orElse(null));
     }
 
     @Override
@@ -33,13 +34,13 @@ public  class PacienteServiceImpl implements PacienteService {
     }
 
     @Override
-    public void deletePaciente(Long id) {
+    public void deletePaciente(String id) {
         pacienteRepository.deleteById(id);
     }
 
-    @Override
-    public List<String> buscarNombresPacientesActivos() {
-        return pacienteRepository.buscarNombresPacientesActivos();
-    }
+//    @Override
+//    public List<String> buscarNombresPacientesActivos() {
+//        return pacienteRepository.buscarNombresPacientesActivos();
+//    }
 
 }

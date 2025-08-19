@@ -21,3 +21,16 @@ public class PersonalController {
         return List.of(paciente);
     }
 }
+
+
+/*
+
+authentication.getName() → devuelve el username (el mismo que en userDetails.getUsername()).
+
+authentication.getAuthorities() → devuelve una colección con los roles/permisos del usuario.
+
+authentication.getCredentials() → en este caso es null porque no pasamos la contraseña aquí.
+
+authentication.getPrincipal() → devuelve el objeto UserDetails completo.
+
+*/

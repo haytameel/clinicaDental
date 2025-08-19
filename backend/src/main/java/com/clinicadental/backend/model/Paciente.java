@@ -1,101 +1,68 @@
+// Paciente.java
 package com.clinicadental.backend.model;
 
-import jakarta.persistence.Entity;
-import jakarta.persistence.Id;
-import jakarta.persistence.Table;
-import org.springframework.format.annotation.DateTimeFormat;
-
-import java.sql.Date;
-import java.time.LocalDate;
+import jakarta.persistence.*;
+import java.util.Date;
 
 @Entity
 @Table(name = "paciente")
 public class Paciente {
 
-    private String username;
-
     @Id
-    private String id;//dni
+    private String id; // DNI
+
+    @Column(nullable = false, unique = true)
+    private String username; // Relacionado con usuario
 
     private String nombre;
-
     private String apellidos;
-
-    @DateTimeFormat(pattern = "yyyy-MM-dd")
-    private LocalDate fechaNacimiento;
-
+    private String email;
+    private String telefono;
     private char genero;
 
-    private String email;
+    @Column(name = "fecha_nacimiento")
+    @Temporal(TemporalType.DATE)
+    private Date fechaNacimiento;
 
     private String direccion;
 
-    private String numTelefono;
+    @Column(name = "codigo_postal")
+    private String codigoPostal;
 
-    private Date fechaRegistro;
+    @Column(name = "seguro_dental")
+    private Boolean seguroDental;
 
-    private String enfermedades;//enfermedaes, alergias, problemas con anestesia...
+    @Column(name = "num_seguro")
+    private String numSeguro;
 
-    private boolean activo;
+    private String notas;
 
-    public Paciente() {
-    }
+    // Relación con usuario (es opcional, puedo no ponerlo)
+    @OneToOne
+    @JoinColumn(name = "username", referencedColumnName = "username", insertable = false, updatable = false)
+    private Usuario usuario; //tabla actual, tabla referenciada
 
+    public Paciente() {}
 
-    public Paciente(String username, String id, String nombre, String apellidos, LocalDate fechaNacimiento, char genero, String email, String direccion, String numTelefono, Date fechaRegistro, String enfermedades, boolean activo) {
-        this.username = username;
+    public Paciente(String id, String username, String nombre, String apellidos, String email, String telefono, char genero, Date fechaNacimiento, String direccion, String codigoPostal, Boolean seguroDental, String numSeguro, String notas, Usuario usuario) {
         this.id = id;
+        this.username = username;
         this.nombre = nombre;
         this.apellidos = apellidos;
-        this.fechaNacimiento = fechaNacimiento;
-        this.genero = genero;
         this.email = email;
-        this.direccion = direccion;
-        this.numTelefono = numTelefono;
-        this.fechaRegistro = fechaRegistro;
-        this.enfermedades = enfermedades;
-        this.activo = activo;
-    }
-
-    public String getUsername() {
-        return username;
-    }
-
-    public void setUsername(String username) {
-        this.username = username;
-    }
-
-    public String getId() {
-        return id;
-    }
-
-    public void setId(String id) {
-        this.id = id;
-    }
-
-    public String getNombre() {
-        return nombre;
-    }
-
-    public void setNombre(String nombre) {
-        this.nombre = nombre;
-    }
-
-    public String getApellidos() {
-        return apellidos;
-    }
-
-    public void setApellidos(String apellidos) {
-        this.apellidos = apellidos;
-    }
-
-    public LocalDate getFechaNacimiento() {
-        return fechaNacimiento;
-    }
-
-    public void setFechaNacimiento(LocalDate fechaNacimiento) {
+        this.telefono = telefono;
+        this.genero = genero;
         this.fechaNacimiento = fechaNacimiento;
+        this.direccion = direccion;
+        this.codigoPostal = codigoPostal;
+        this.seguroDental = seguroDental;
+        this.numSeguro = numSeguro;
+        this.notas = notas;
+        this.usuario = usuario;
     }
+
+    public String getId() { return id; }
+    public void setId(String id) { this.id = id; }
 
     public char getGenero() {
         return genero;
@@ -105,69 +72,39 @@ public class Paciente {
         this.genero = genero;
     }
 
-    public String getEmail() {
-        return email;
-    }
+    public String getUsername() { return username; }
+    public void setUsername(String username) { this.username = username; }
 
-    public void setEmail(String email) {
-        this.email = email;
-    }
+    public String getNombre() { return nombre; }
+    public void setNombre(String nombre) { this.nombre = nombre; }
 
-    public String getDireccion() {
-        return direccion;
-    }
+    public String getApellidos() { return apellidos; }
+    public void setApellidos(String apellidos) { this.apellidos = apellidos; }
 
-    public void setDireccion(String direccion) {
-        this.direccion = direccion;
-    }
+    public String getEmail() { return email; }
+    public void setEmail(String email) { this.email = email; }
 
-    public String getNumTelefono() {
-        return numTelefono;
-    }
+    public String getTelefono() { return telefono; }
+    public void setTelefono(String telefono) { this.telefono = telefono; }
 
-    public void setNumTelefono(String numTelefono) {
-        this.numTelefono = numTelefono;
-    }
+    public Date getFechaNacimiento() { return fechaNacimiento; }
+    public void setFechaNacimiento(Date fechaNacimiento) { this.fechaNacimiento = fechaNacimiento; }
 
-    public Date getFechaRegistro() {
-        return fechaRegistro;
-    }
+    public String getDireccion() { return direccion; }
+    public void setDireccion(String direccion) { this.direccion = direccion; }
 
-    public void setFechaRegistro(Date fechaRegistro) {
-        this.fechaRegistro = fechaRegistro;
-    }
+    public String getCodigoPostal() { return codigoPostal; }
+    public void setCodigoPostal(String codigoPostal) { this.codigoPostal = codigoPostal; }
 
-    public String getEnfermedades() {
-        return enfermedades;
-    }
+    public Boolean getSeguroDental() { return seguroDental; }
+    public void setSeguroDental(Boolean seguroDental) { this.seguroDental = seguroDental; }
 
-    public void setEnfermedades(String enfermedades) {
-        this.enfermedades = enfermedades;
-    }
+    public String getNumSeguro() { return numSeguro; }
+    public void setNumSeguro(String numSeguro) { this.numSeguro = numSeguro; }
 
-    public boolean isActivo() {
-        return activo;
-    }
+    public String getNotas() { return notas; }
+    public void setNotas(String notas) { this.notas = notas; }
 
-    public void setActivo(boolean activo) {
-        this.activo = activo;
-    }
-
-    @Override
-    public String toString() {
-        return "Paciente{" +
-                "username='" + username + '\'' +
-                ", id='" + id + '\'' +
-                ", nombre='" + nombre + '\'' +
-                ", apellidos='" + apellidos + '\'' +
-                ", fechaNacimiento=" + fechaNacimiento +
-                ", genero=" + genero +
-                ", email='" + email + '\'' +
-                ", direccion='" + direccion + '\'' +
-                ", numTelefono='" + numTelefono + '\'' +
-                ", fechaRegistro=" + fechaRegistro +
-                ", enfermedades='" + enfermedades + '\'' +
-                ", activo=" + activo +
-                '}';
-    }
+    public Usuario getUsuario() { return usuario; }
+    public void setUsuario(Usuario usuario) { this.usuario = usuario; }
 }

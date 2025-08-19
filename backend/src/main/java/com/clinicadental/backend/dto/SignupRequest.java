@@ -6,6 +6,8 @@ public class SignupRequest {
     private String username;
     private String password;
 
+    private Rol rol;
+
     public Rol getRol() {
         return rol;
     }
@@ -14,7 +16,6 @@ public class SignupRequest {
         this.rol = rol;
     }
 
-    private Rol rol;
 
 
     public String getPassword() {

@@ -1,17 +1,17 @@
 package com.clinicadental.backend.service;
 
 import com.clinicadental.backend.model.Paciente;
-import org.springframework.data.jpa.repository.Query;
 
 import java.util.List;
+import java.util.Optional;
 
 
 public interface PacienteService {
     List<Paciente> getAllPacientes();
-    Paciente getPacienteById(Long id);
+    Optional<Paciente> getPacienteById(String id);
     Paciente savePaciente(Paciente paciente);
-    void deletePaciente(Long id);
+    void deletePaciente(String id);
 
-    List<String> buscarNombresPacientesActivos();
+   // List<String> buscarNombresPacientesActivos();
 
 }

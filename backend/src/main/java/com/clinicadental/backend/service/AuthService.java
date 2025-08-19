@@ -29,6 +29,7 @@ public class AuthService {
         Usuario user = new Usuario();
         user.setUsername(request.getUsername());
         user.setPassword(passwordEncoder.encode(request.getPassword()));
+        //MIRAR QUE EL ROL SEA CORRECTO, LO MEJOR USAR DESPLEGABLE
         user.setRol(request.getRol());
         usuarioRepository.save(user);
     }

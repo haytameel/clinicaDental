@@ -34,7 +34,7 @@ public class AuthController {
     public ResponseEntity<?> login(@RequestBody LoginRequest request) {
         try {
             String token = authService.login(request);
-            return ResponseEntity.ok(Map.of("token", token));
+            return ResponseEntity.ok(Map.of("token", token,"username",request.getUsername() )); //no hace falta el username, se extrae del token
         }
         catch (RuntimeException e) {
             return ResponseEntity.badRequest().body(e.getMessage());

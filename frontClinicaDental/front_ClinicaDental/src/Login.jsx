@@ -34,17 +34,21 @@ export const Login = () => {
                 //guardamos el token
                 const token = response.data.token;
                 localStorage.setItem('token', token);
+                localStorage.setItem('username', response.data.username); 
                 console.log('Token guardado en localStorage:', token);
+                console.log('Username', response.data.username);
 
                 //TIPO DE USUARIO
                 const decoded = jwtDecode(token);
                 const rol = decoded.rol;
+                const username=decoded.sub;
                 console.log('Rol del usuario:', rol);
-
+                console.log('ID del usuario:', username);
                 // Redirigimos según el rol del usuario
                 if (rol === 'ADMIN') window.location.href = '/admin';
                 else if (rol === 'PERSONAL') window.location.href = '/personal';
-                else window.location.href = '/paciente';
+                else
+                window.location.href = '/paciente'; 
 
             }).catch(error => {
                 setErrorMsg('Usuario o contraseña incorrectos'); // mostramos error

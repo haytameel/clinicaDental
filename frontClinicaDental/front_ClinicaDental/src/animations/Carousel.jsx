@@ -63,6 +63,12 @@ const DEFAULT_ITEMS = [
     description: "Radiografías y escáneres digitales para una atención más precisa y rápida.",
     image: "/img/radios.jpg",
   },
+  {
+    id: 11,
+    title: "Empastes dentales",
+    description: "Realización de empastes para reparar caries y restaurar dientes dañados.",
+    image: "/img/empastes.webp",
+  },
 ];
 
 
