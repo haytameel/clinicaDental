@@ -41,7 +41,7 @@ public class PacienteController {
         ApiResponse<List<Paciente>> response;
 
         if (authentication.getAuthorities().stream()
-                .anyMatch(auth -> auth.getAuthority().equals("ROLE_PERSONAL"))) {
+                .anyMatch(auth -> auth.getAuthority().equals("ROLE_ADMIN"))) {
         List<Paciente> pacientes = pacienteService.getAllPacientes();
         response=new ApiResponse<>("succes","listado de todos los pacientes",pacientes);
         return ResponseEntity.ok(response);
@@ -59,7 +59,7 @@ public class PacienteController {
         ApiResponse<Paciente> response;
 
         if (authentication.getAuthorities().stream()
-                .anyMatch(auth -> auth.getAuthority().equals("ROLE_PACIENTE") && id.equals(username) || auth.getAuthority().equals("ROLE_PERSONAL"))  ) {
+                .anyMatch(auth -> auth.getAuthority().equals("ROLE_PACIENTE") && id.equals(username) || auth.getAuthority().equals("ROLE_ADMIN"))  ) {
             Paciente paciente = pacienteService.getPacienteById(id);
             response=new ApiResponse<>("succes",
                     "Información del paciente obtenida correctamente",
@@ -75,7 +75,7 @@ public class PacienteController {
         ApiResponse<Paciente> response;
 
         if (authentication.getAuthorities().stream()
-                .anyMatch(auth -> auth.getAuthority().equals("ROLE_PACIENTE") || auth.getAuthority().equals("ROLE_PERSONAL"))) {
+                .anyMatch(auth -> auth.getAuthority().equals("ROLE_PACIENTE") || auth.getAuthority().equals("ROLE_ADMIN"))) {
             Paciente p= pacienteService.savePaciente(paciente);
             response=new ApiResponse<>("succes",
                     "Perfil creado exitosamente",
@@ -92,7 +92,7 @@ public class PacienteController {
         ApiResponse<Paciente> response;
         Paciente res=null;
         if (authentication.getAuthorities().stream()
-                .anyMatch(auth -> auth.getAuthority().equals("ROLE_PACIENTE") || auth.getAuthority().equals("ROLE_PERSONAL"))) {
+                .anyMatch(auth -> auth.getAuthority().equals("ROLE_PACIENTE") || auth.getAuthority().equals("ROLE_ADMIN"))) {
             Paciente pacienteExistente = pacienteService.getPacienteById(id);
             if (pacienteExistente != null) {
                 pacienteExistente.setId(paciente.getId());
@@ -130,7 +130,7 @@ public class PacienteController {
         ApiResponse<Boolean> response;
 
         if (authentication.getAuthorities().stream()
-                .anyMatch(auth -> auth.getAuthority().equals("ROLE_PACIENTE") && id.equals(username) || auth.getAuthority().equals("ROLE_PERSONAL"))  ) {
+                .anyMatch(auth -> auth.getAuthority().equals("ROLE_PACIENTE") && id.equals(username) || auth.getAuthority().equals("ROLE_ADMIN"))  ) {
             pacienteService.deletePaciente(id);
             response=new ApiResponse<>("succes",
                     "Paciente eliminado correctamente",
