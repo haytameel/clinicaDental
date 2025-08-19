@@ -22,4 +22,8 @@ public class CitaService{
         return citaRepository.findCitasByPaciente(paciente);
     }
 
+    public Cita agendarCita( Cita cita){
+        return citaRepository.save(cita);
+    }
+
 }

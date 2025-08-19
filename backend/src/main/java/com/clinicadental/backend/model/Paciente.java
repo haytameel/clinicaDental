@@ -37,14 +37,14 @@ public class Paciente {
 
     private String notas;
 
-    // Relación con usuario (es opcional, puedo no ponerlo)
-    @OneToOne
-    @JoinColumn(name = "username", referencedColumnName = "username", insertable = false, updatable = false)
-    private Usuario usuario; //tabla actual, tabla referenciada
+//    // Relación con usuario (es opcional, puedo no ponerlo)
+//    @OneToOne
+//    @JoinColumn(name = "username", referencedColumnName = "username", insertable = false, updatable = false)
+//    private Usuario usuario; //tabla actual, tabla referenciada
 
     public Paciente() {}
 
-    public Paciente(String id, String username, String nombre, String apellidos, String email, String telefono, char genero, Date fechaNacimiento, String direccion, String codigoPostal, Boolean seguroDental, String numSeguro, String notas, Usuario usuario) {
+    public Paciente(String id, String username, String nombre, String apellidos, String email, String telefono, char genero, Date fechaNacimiento, String direccion, String codigoPostal, Boolean seguroDental, String numSeguro, String notas) {
         this.id = id;
         this.username = username;
         this.nombre = nombre;
@@ -58,7 +58,6 @@ public class Paciente {
         this.seguroDental = seguroDental;
         this.numSeguro = numSeguro;
         this.notas = notas;
-        this.usuario = usuario;
     }
 
     public String getId() { return id; }
@@ -105,6 +104,6 @@ public class Paciente {
     public String getNotas() { return notas; }
     public void setNotas(String notas) { this.notas = notas; }
 
-    public Usuario getUsuario() { return usuario; }
-    public void setUsuario(Usuario usuario) { this.usuario = usuario; }
+//    public Usuario getUsuario() { return usuario; }
+//    public void setUsuario(Usuario usuario) { this.usuario = usuario; }
 }

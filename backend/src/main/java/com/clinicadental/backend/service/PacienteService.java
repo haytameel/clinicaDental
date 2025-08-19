@@ -8,7 +8,7 @@ import java.util.Optional;
 
 public interface PacienteService {
     List<Paciente> getAllPacientes();
-    Optional<Paciente> getPacienteById(String id);
+    Paciente getPacienteById(String id);
     Paciente savePaciente(Paciente paciente);
     void deletePaciente(String id);
 

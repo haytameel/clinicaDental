@@ -23,9 +23,9 @@ public  class PacienteServiceImpl implements PacienteService {
     }
 
     @Override
-    public Optional<Paciente> getPacienteById(String id) {
-        System.out.println("id: "+id);
-        return Optional.ofNullable(pacienteRepository.findById(id).orElse(null));
+    public Paciente getPacienteById(String id) {
+        Paciente paciente=pacienteRepository.findById(id).get();
+        return paciente;
     }
 
     @Override

@@ -1,3 +1,7 @@
+DROP TABLE IF EXISTS PACIENTE;
+DROP TABLE IF EXISTS USUARIO;
+
+
 CREATE TABLE usuario (
   username VARCHAR(255) PRIMARY KEY,
   password VARCHAR(255) NOT NULL,
@@ -35,3 +39,12 @@ INSERT INTO usuario (username, password, rol) VALUES
 ('admin1', '$2a$10$7QJ5eFDdlLZsRyE5ZlhXsu9zVkYzPv9MQ0zld4UtlrJjVtiQk3FvC', 'ADMIN'),
 ('admin2', '$2a$10$7QJ5eFDdlLZsRyE5ZlhXsu9zVkYzPv9MQ0zld4UtlrJjVtiQk3FvC', 'ADMIN'),
 ('admin3', '$2a$10$7QJ5eFDdlLZsRyE5ZlhXsu9zVkYzPv9MQ0zld4UtlrJjVtiQk3FvC', 'ADMIN');
+
+
+
+
+INSERT INTO paciente (id, username, nombre, apellidos, email, telefono, genero, fecha_nacimiento, direccion, codigo_postal, seguro_dental, num_seguro, notas) VALUES
+('11111111A', 'paciente', 'Ana', 'García López', 'ana@example.com', '600111111', 'F', '1990-01-15', 'Calle Falsa 123', '28001', TRUE, 'SD12345', 'Alergia a penicilina'),
+('22222222B', 'paciente1', 'Juan', 'Pérez Martínez', 'juan@example.com', '600222222', 'M', '1985-05-30', 'Calle Real 45', '28002', FALSE, NULL, 'Observación: hipertensión'),
+('33333333C', 'paciente2', 'María', 'Rodríguez Díaz', 'maria@example.com', '600333333', 'F', '1992-07-20', 'Av. Central 10', '28003', TRUE, 'SD67890', 'Alergia al látex'),
+('44444444D', 'paciente3', 'Carlos', 'Sánchez Torres', 'carlos@example.com', '600444444', 'M', '1988-12-10', 'Plaza Mayor 5', '28004', FALSE, NULL, 'Observación: necesita revisión ortodóntica');

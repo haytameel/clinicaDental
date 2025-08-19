@@ -7,6 +7,7 @@ import com.clinicadental.backend.model.Paciente;
 import com.clinicadental.backend.service.CitaService;
 import com.clinicadental.backend.service.PacienteService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.core.Authentication;
@@ -40,7 +41,7 @@ public class PacienteController {
         ApiResponse<List<Paciente>> response;
 
         if (authentication.getAuthorities().stream()
-                .anyMatch(auth -> auth.getAuthority().equals("ROLE_PACIENTE"))) {
+                .anyMatch(auth -> auth.getAuthority().equals("ROLE_PERSONAL"))) {
         List<Paciente> pacientes = pacienteService.getAllPacientes();
         response=new ApiResponse<>("succes","listado de todos los pacientes",pacientes);
         return ResponseEntity.ok(response);
@@ -49,56 +50,141 @@ public class PacienteController {
         return ResponseEntity.status(HttpStatus.FORBIDDEN).body(response);
     }
 
-    @GetMapping("/{id}")
-    public Optional<Paciente> obtenerPorId(@PathVariable String id) {
-        System.out.println("iddddd: "+id);
-        System.out.println(pacienteService.getPacienteById(id));
-        return pacienteService.getPacienteById(id);
+    @GetMapping("/{id}")//solo puede usarlo el paciente propio de su usuario o el personal
+    public ResponseEntity<ApiResponse<Paciente>> obtenerPorId(@PathVariable String id, Authentication authentication) {
+        String username = authentication.getName();
+        String rol=authentication.getAuthorities().toString();
+        // System.out.println("-----"+username+"-----"+rol);
+
+        ApiResponse<Paciente> response;
+
+        if (authentication.getAuthorities().stream()
+                .anyMatch(auth -> auth.getAuthority().equals("ROLE_PACIENTE") && id.equals(username) || auth.getAuthority().equals("ROLE_PERSONAL"))  ) {
+            Paciente paciente = pacienteService.getPacienteById(id);
+            response=new ApiResponse<>("succes",
+                    "Información del paciente obtenida correctamente",
+                    paciente);
+            return ResponseEntity.ok(response);
+        }
+        response = new ApiResponse<>("error", "No tienes permisos para ver esta información", null);
+        return ResponseEntity.status(HttpStatus.FORBIDDEN).body(response);
     }
 
-    @PostMapping
-    public Paciente crear(@RequestBody Paciente paciente) {
-        return pacienteService.savePaciente(paciente);
+    @PostMapping//lo puede hacer tanto el personal como el paciente
+    public ResponseEntity<ApiResponse<Paciente>> crear(@RequestBody Paciente paciente, Authentication authentication) {
+        ApiResponse<Paciente> response;
+
+        if (authentication.getAuthorities().stream()
+                .anyMatch(auth -> auth.getAuthority().equals("ROLE_PACIENTE") || auth.getAuthority().equals("ROLE_PERSONAL"))) {
+            Paciente p= pacienteService.savePaciente(paciente);
+            response=new ApiResponse<>("succes",
+                    "Perfil creado exitosamente",
+                    p);
+            return ResponseEntity.ok(response);
+        }
+        response = new ApiResponse<>("error", "No tienes permisos para crear el perfil", null);
+        return ResponseEntity.status(HttpStatus.FORBIDDEN).body(response);
+
     }
 
     @PutMapping("/{id}")
-    public Paciente actualizar(@PathVariable String id, @RequestBody Paciente paciente) {
-        Optional<Paciente> pacienteExistente = pacienteService.getPacienteById(id);
-        if (pacienteExistente != null) {
-            pacienteExistente.get().setId(paciente.getId());
-            pacienteExistente.get().setNombre(paciente.getNombre());
-            pacienteExistente.get().setApellidos(paciente.getApellidos());
-            pacienteExistente.get().setEmail(paciente.getEmail());
-            pacienteExistente.get().setDireccion(paciente.getDireccion());
-            pacienteExistente.get().setGenero(paciente.getGenero());
-            pacienteExistente.get().setNotas(paciente.getNotas());
-            pacienteExistente.get().setFechaNacimiento(paciente.getFechaNacimiento());
-            pacienteExistente.get().setApellidos(paciente.getApellidos());
-            pacienteExistente.get().setTelefono(paciente.getTelefono());
-            pacienteExistente.get().setCodigoPostal(paciente.getCodigoPostal());
-            pacienteExistente.get().setSeguroDental(paciente.getSeguroDental());
-            pacienteExistente.get().setNumSeguro(paciente.getNumSeguro());
-
-
-            return pacienteService.savePaciente(pacienteExistente.get());
+    public ResponseEntity<ApiResponse<Paciente>> actualizar(@PathVariable String id, @RequestBody Paciente paciente, Authentication authentication) {
+        ApiResponse<Paciente> response;
+        Paciente res=null;
+        if (authentication.getAuthorities().stream()
+                .anyMatch(auth -> auth.getAuthority().equals("ROLE_PACIENTE") || auth.getAuthority().equals("ROLE_PERSONAL"))) {
+            Paciente pacienteExistente = pacienteService.getPacienteById(id);
+            if (pacienteExistente != null) {
+                pacienteExistente.setId(paciente.getId());
+                pacienteExistente.setNombre(paciente.getNombre());
+                pacienteExistente.setApellidos(paciente.getApellidos());
+                pacienteExistente.setEmail(paciente.getEmail());
+                pacienteExistente.setDireccion(paciente.getDireccion());
+                pacienteExistente.setGenero(paciente.getGenero());
+                pacienteExistente.setNotas(paciente.getNotas());
+                pacienteExistente.setFechaNacimiento(paciente.getFechaNacimiento());
+                pacienteExistente.setApellidos(paciente.getApellidos());
+                pacienteExistente.setTelefono(paciente.getTelefono());
+                pacienteExistente.setCodigoPostal(paciente.getCodigoPostal());
+                pacienteExistente.setSeguroDental(paciente.getSeguroDental());
+                pacienteExistente.setNumSeguro(paciente.getNumSeguro());
+                res= pacienteService.savePaciente(pacienteExistente);
+            }
+            response=new ApiResponse<>("succes",
+                    "Perfil creado exitosamente",
+                    res);
+            return ResponseEntity.ok(response);
         }
-        return null;
+
+        response = new ApiResponse<>("error", "No tienes permisos para actualizar el perfil", res);
+        return ResponseEntity.status(HttpStatus.FORBIDDEN).body(response);
+
     }
 
-    @DeleteMapping("/{id}")
-    public void eliminar(@PathVariable String id) {
-        pacienteService.deletePaciente(id);
+    @DeleteMapping("/{id}")//que solo la pueda eliminar el personal
+    public ResponseEntity<ApiResponse<Boolean>> eliminar(@PathVariable String id, Authentication authentication) {
+        String username = authentication.getName();
+        String rol=authentication.getAuthorities().toString();
+        // System.out.println("-----"+username+"-----"+rol);
+
+        ApiResponse<Boolean> response;
+
+        if (authentication.getAuthorities().stream()
+                .anyMatch(auth -> auth.getAuthority().equals("ROLE_PACIENTE") && id.equals(username) || auth.getAuthority().equals("ROLE_PERSONAL"))  ) {
+            pacienteService.deletePaciente(id);
+            response=new ApiResponse<>("succes",
+                    "Paciente eliminado correctamente",
+                   true);
+            return ResponseEntity.ok(response);
+        }
+        response = new ApiResponse<>("error", "No tienes permisos para eliminar al paciente", false);
+        return ResponseEntity.status(HttpStatus.FORBIDDEN).body(response);
     }
 
 
 
-    @GetMapping("/citas")
-    public List<Cita> getCitasDePacienteAutenticado(Authentication authentication) {
+    @GetMapping("/citas")//citas del paciente que hace la peticion
+    public ResponseEntity<ApiResponse<List<Cita>>>  getCitasDePacienteAutenticado(Authentication authentication) {
         String username = authentication.getName(); // el "sub" del token
-        System.out.println("Usuario autenticado: " + authentication.getName());
-        System.out.println("Authorities: " + authentication.getAuthorities());
-        return citaService.getCitasPorPaciente(username);
+
+        ApiResponse<List<Cita>> response;
+
+        if (authentication.getAuthorities().stream()
+                .anyMatch(auth -> auth.getAuthority().equals("ROLE_PACIENTE"))) {
+            List<Cita> citas = citaService.getCitasPorPaciente(username);
+            response=new ApiResponse<>("succes","listado de todas las citas",citas);
+            return ResponseEntity.ok(response);
+        }
+        response = new ApiResponse<>("error", "No tienes permisos para ver esta información", null);
+        return ResponseEntity.status(HttpStatus.FORBIDDEN).body(response);
+
     }
+
+    @PostMapping("/agendarcita")
+    public ResponseEntity<ApiResponse<Cita>> agendarCita(@RequestBody Cita nuevaCita,
+            Authentication authentication) {
+
+        String username = authentication.getName();
+        ApiResponse<Cita> response;
+
+        if (authentication.getAuthorities().stream()
+                .anyMatch(auth -> auth.getAuthority().equals("ROLE_PACIENTE"))) {
+
+            try {
+                Cita citaGuardada = citaService.agendarCita(nuevaCita);
+                response = new ApiResponse<>("success", "Cita agendada correctamente", citaGuardada);
+                return ResponseEntity.status(HttpStatus.CREATED).body(response);
+
+            } catch (Exception e) {
+                response = new ApiResponse<>("error", "No se pudo agendar la cita: " + e.getMessage(), null);
+                return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(response);
+            }
+        }
+
+        response = new ApiResponse<>("error", "No tienes permisos para agendar citas", null);
+        return ResponseEntity.status(HttpStatus.FORBIDDEN).body(response);
+    }
+
 }
 
 /*
