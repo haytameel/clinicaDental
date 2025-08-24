@@ -67,7 +67,7 @@ const DEFAULT_ITEMS = [
     id: 11,
     title: "Empastes dentales",
     description: "Realización de empastes para reparar caries y restaurar dientes dañados.",
-    image: "/img/empastes.webp",
+    image: "/img/empaste.webp",
   },
 ];
 

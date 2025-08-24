@@ -286,6 +286,7 @@ h1 {
 
 /*CONTACTO*/
 .contacto {
+    background-color: red;
     height: 100vh;
     /*justify-content: center;*/
     margin-top: 1rem;

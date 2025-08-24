@@ -35,7 +35,7 @@ body {
   justify-content: center;
 }
 
-input,select, option, textarea,checkbox {
+.signup-page input,select, option, textarea,checkbox {
   margin: 10px;
   padding: 10px;
   border-radius: 5px;
@@ -45,63 +45,8 @@ input,select, option, textarea,checkbox {
   background-color: whitesmoke;
 }
 
-a{
+.signup-page a{
   text-decoration: underline;
     color: #8CE7F2;
 }
 
-
-.bg-indigo {
-  background-color: #4835d4;
-}
-
-@media (min-width: 1025px) {
-  .h-custom {
-    height: 100vh !important;
-  }
-}
-
-@media (min-width: 759px) {
-  .card-registration-2 .bg-indigo {
-    border-top-right-radius: 15px;
-    border-bottom-right-radius: 15px;
-  }
-}
-
-@media (max-width: 758px) {
-  .card-registration-2 .bg-indigo {
-    border-bottom-left-radius: 15px;
-    border-bottom-right-radius: 15px;
-  }
-}
-
-@media (min-width: 759px) {
-  .card-registration-2 .bg-white {
-    border-top-left-radius: 15px;
-    border-bottom-left-radius: 15px;
-  }
-}
-
-@media (max-width: 758px) {
-  .card-registration-2 .bg-white {
-    border-top-left-radius: 15px;
-    border-top-right-radius: 15px;
-  }
-}
-
-
-
-
-    id VARCHAR(20) PRIMARY KEY, --dni
-    username VARCHAR(50) UNIQUE NOT NULL,
-    nombre VARCHAR(100),
-    apellidos VARCHAR(150),
-    email VARCHAR(150),
-    genero CHAR(1) CHECK (genero IN ('F','M')),
-    telefono VARCHAR(20),
-    fecha_nacimiento DATE,
-    direccion VARCHAR(255),
-    codigo_postal VARCHAR(10),
-    seguro_dental BOOLEAN,
-    num_seguro VARCHAR(255),
-    notas VARCHAR(255),

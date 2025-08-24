@@ -109,7 +109,7 @@ export const Login = () => {
                     <button className="boton" type='submit'>INICIAR SESIÓN</button>
 
                     <div>
-                        <h5> <a href='registro'>O REGÍSTRATE</a>
+                        <h5> <a href='/signup'>O REGÍSTRATE</a>
                             
                             </h5>
                     </div>
