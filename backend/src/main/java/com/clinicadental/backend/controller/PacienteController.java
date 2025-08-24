@@ -70,6 +70,26 @@ public class PacienteController {
         return ResponseEntity.status(HttpStatus.FORBIDDEN).body(response);
     }
 
+    @GetMapping("/miperfil")//solo puede usarlo el paciente propio de su usuario o el personal
+    public ResponseEntity<ApiResponse<Paciente>> obtenerPaciente( Authentication authentication) {
+        String username = authentication.getName();
+        String rol=authentication.getAuthorities().toString();
+        // System.out.println("-----"+username+"-----"+rol);
+
+        ApiResponse<Paciente> response;
+
+        if (authentication.getAuthorities().stream()
+                .anyMatch(auth -> auth.getAuthority().equals("ROLE_PACIENTE")  || auth.getAuthority().equals("ROLE_ADMIN"))  ) {
+            Paciente paciente = pacienteService.getPacienteById(username);
+            response=new ApiResponse<>("succes",
+                    "Información del paciente obtenida correctamente",
+                    paciente);
+            return ResponseEntity.ok(response);
+        }
+        response = new ApiResponse<>("error", "No tienes permisos para ver esta información", null);
+        return ResponseEntity.status(HttpStatus.FORBIDDEN).body(response);
+    }
+
     @PostMapping//lo puede hacer tanto el personal como el paciente
     public ResponseEntity<ApiResponse<Paciente>> crear(@RequestBody Paciente paciente, Authentication authentication) {
         ApiResponse<Paciente> response;

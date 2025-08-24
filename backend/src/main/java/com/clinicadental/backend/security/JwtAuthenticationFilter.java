@@ -39,8 +39,15 @@ public class JwtAuthenticationFilter extends OncePerRequestFilter {
         String username = jwtService.extractUsername(token);
 
         if (username != null && SecurityContextHolder.getContext().getAuthentication() == null) {
-            UserDetails userDetails = userDetailsService.loadUserByUsername(username);
-            //validamos que el usuario del token existe en la base de datos realmente
+            String rol = jwtService.extractRol(token); // método que extrae "PACIENTE" del JWT
+            UserDetails userDetails = new org.springframework.security.core.userdetails.User(
+                    username,
+                    "",
+                    java.util.Collections.singletonList(
+                            new org.springframework.security.core.authority.SimpleGrantedAuthority("ROLE_" + rol)
+                    )
+            );
+
             if (jwtService.validateToken(token, userDetails)) {
                 var authToken = new UsernamePasswordAuthenticationToken(
                         userDetails, null, userDetails.getAuthorities()
@@ -49,6 +56,7 @@ public class JwtAuthenticationFilter extends OncePerRequestFilter {
                 SecurityContextHolder.getContext().setAuthentication(authToken);
             }
         }
+
 
 
         filterChain.doFilter(request, response);

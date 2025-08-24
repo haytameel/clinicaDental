@@ -55,7 +55,7 @@ export const SignupForm = () => {
           fechaNacimiento: "",
           direccion: "",
           codigoPostal: "",
-          seguroDental: false,
+          seguroDental: "",
           numSeguro: "",
           notas: ""
         });
@@ -77,7 +77,7 @@ export const SignupForm = () => {
 
       <div className="signup-der">
         <form onSubmit={handleSubmit}>
-          <h2>Regístrate</h2>
+          <h2>Regístrate <span></span> como Paciente</h2>
 
           {errorMsg && (
             <div style={{ color: "red", marginBottom: "1rem", fontWeight: "bold" }}>
@@ -215,15 +215,16 @@ export const SignupForm = () => {
               maxLength="255"
             />
 
-            <textarea
-              className="notas"
-              name="notas"
-              placeholder="Alergias u observaciones"
-              value={formData.notas}
-              onChange={handleChange}
-            />
+
           </div>
 
+          <textarea
+            className="notas"
+            name="notas"
+            placeholder="Alergias u observaciones"
+            value={formData.notas}
+            onChange={handleChange}
+          />
           <button className="boton" type="submit">
             CREAR CUENTA
           </button>

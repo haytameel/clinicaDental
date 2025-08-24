@@ -64,7 +64,7 @@ public class SecurityConfig {
         Filter jwtFilter = new JwtAuthenticationFilter(userDetailsService, jwtService);
 
         http
-                .cors(cors -> cors.disable())
+                .cors(cors -> {}) // Habilita CORS usando mi CorsConfigurationSource
 
                 .csrf(csrf -> csrf.disable())
                 .sessionManagement(session -> session.sessionCreationPolicy(SessionCreationPolicy.STATELESS))

@@ -36,6 +36,15 @@ public class JwtService {
                 .signWith(key)
                 .compact();
     }
+    public String extractRol(String token) {
+        return Jwts.parserBuilder()
+                .setSigningKey(key)
+                .build()
+                .parseClaimsJws(token)
+                .getBody()
+                .get("rol", String.class); // extrae el claim "rol" como String
+    }
+
 
     public String extractUsername(String token) {
         return Jwts.parserBuilder()
