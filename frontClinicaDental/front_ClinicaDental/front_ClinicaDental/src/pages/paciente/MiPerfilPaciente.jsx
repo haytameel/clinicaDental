@@ -1,7 +1,7 @@
 import React from 'react'
 import { useState, useEffect } from "react";
 import axios from "axios";
-
+import NavPaciente from './NavPaciente';
 export const MiPerfilPaciente = () => {
     const [perfil, setPerfil] = useState({
         username: "",
@@ -51,6 +51,9 @@ export const MiPerfilPaciente = () => {
 
     return (
         <div>
+            <section className="inicio" id="inicio">
+                < NavPaciente />
+            </section>
             <h2>Mi Perfil Paciente</h2>
             {errorMsg && <p style={{ color: "red" }}>{errorMsg}</p>}
             {successMsg && <p style={{ color: "green" }}>{successMsg}</p>}

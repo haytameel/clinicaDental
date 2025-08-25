@@ -2,13 +2,15 @@ import React, { useEffect, useState } from 'react';
 import axios from 'axios';
 import NavPaciente from './NavPaciente';
 
-function CitasPaciente() {
+
+export const CitasProximasPaciente = () => {
+
     const [citas, setCitas] = useState([]);
 
     useEffect(() => {
         const token = localStorage.getItem('token');
 
-        axios.get("http://localhost:8080/citas", {
+        axios.get("http://localhost:8080/citas/proximas", {
             headers: {
                 Authorization: `Bearer ${token}`
             }
@@ -24,13 +26,15 @@ function CitasPaciente() {
     }, []);
 
 
+
     return (
+
         <div>
             <NavPaciente />
 
-            <h2>Mis Historial de Citas</h2>
-            {citas.length === 0 ? (
-                <p>No tienes ninguna cita registrada.</p>
+            <h2>Mis Próximas citas</h2>
+                   {citas.length === 0 ? (
+                <p>No tienes ninguna cita registrada en un futuro.</p>
             ) : (
                 <ul>
                     {citas.map((cita, index) => (
@@ -46,7 +50,7 @@ function CitasPaciente() {
                 </ul>
             )}
         </div>
-    );
+    )
 }
 
-export default CitasPaciente;
+export default CitasProximasPaciente;

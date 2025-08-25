@@ -7,15 +7,12 @@ import com.clinicadental.backend.model.Paciente;
 import com.clinicadental.backend.service.CitaService;
 import com.clinicadental.backend.service.PacienteService;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.beans.factory.annotation.Value;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.core.Authentication;
 import org.springframework.web.bind.annotation.*;
 
-import java.util.ArrayList;
 import java.util.List;
-import java.util.Optional;
 
 @RestController
 @RequestMapping("/paciente")
@@ -50,7 +47,7 @@ public class PacienteController {
         return ResponseEntity.status(HttpStatus.FORBIDDEN).body(response);
     }
 
-    @GetMapping("/{id}")//solo puede usarlo el paciente propio de su usuario o el personal
+    @GetMapping("/{id}")//solo puede usarlo el paciente propio de su usuario o el admin
     public ResponseEntity<ApiResponse<Paciente>> obtenerPorId(@PathVariable String id, Authentication authentication) {
         String username = authentication.getName();
         String rol=authentication.getAuthorities().toString();
@@ -70,7 +67,7 @@ public class PacienteController {
         return ResponseEntity.status(HttpStatus.FORBIDDEN).body(response);
     }
 
-    @GetMapping("/miperfil")//solo puede usarlo el paciente propio de su usuario o el personal
+    @GetMapping("/miperfil")//solo puede usarlo el paciente propio de su usuario o el admin
     public ResponseEntity<ApiResponse<Paciente>> obtenerPaciente( Authentication authentication) {
         String username = authentication.getName();
         String rol=authentication.getAuthorities().toString();
@@ -90,7 +87,7 @@ public class PacienteController {
         return ResponseEntity.status(HttpStatus.FORBIDDEN).body(response);
     }
 
-    @PostMapping//lo puede hacer tanto el personal como el paciente
+    @PostMapping//lo puede hacer tanto el admin como el paciente
     public ResponseEntity<ApiResponse<Paciente>> crear(@RequestBody Paciente paciente, Authentication authentication) {
         ApiResponse<Paciente> response;
 
@@ -171,7 +168,7 @@ public class PacienteController {
 
         if (authentication.getAuthorities().stream()
                 .anyMatch(auth -> auth.getAuthority().equals("ROLE_PACIENTE"))) {
-            List<Cita> citas = citaService.getCitasPorPaciente(username);
+            List<Cita> citas = citaService.getTodasOrdenadasCitasPorPaciente(username);
             response=new ApiResponse<>("succes","listado de todas las citas",citas);
             return ResponseEntity.ok(response);
         }

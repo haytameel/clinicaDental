@@ -73,6 +73,7 @@ public class SecurityConfig {
                         .requestMatchers("/admin/**").hasRole("ADMIN")
                         .requestMatchers("/personal/**").hasAnyRole("PERSONAL", "ADMIN")
                         .requestMatchers("/paciente/**").hasAnyRole("PACIENTE","ADMIN")
+                        .requestMatchers("/citas/**").permitAll()
                         .requestMatchers("/api/contacto/**").permitAll()
                         .anyRequest().authenticated()
                 )
