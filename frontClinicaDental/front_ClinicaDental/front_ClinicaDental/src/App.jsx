@@ -8,7 +8,7 @@ import SignupForm from './SignupForm.jsx';
 import MiPerfilPaciente from './pages/paciente/MiPerfilPaciente.jsx';
 import CitasProximasPaciente from './pages/paciente/CitasProximasPaciente.jsx';
 import CitasPasadasPaciente from './pages/paciente/CitasPasadasPaciente.jsx';
-
+import Calendar from './pages/paciente/Calendar.jsx';
 
 
 function App() {
@@ -24,6 +24,8 @@ function App() {
         <Route path="/paciente/citas/proximas" element={<CitasProximasPaciente />} />
         <Route path="/paciente/citas/pasadas" element={<CitasPasadasPaciente />} />
         <Route path="/paciente/miperfil" element={<MiPerfilPaciente />} />
+        <Route path="/paciente/calendario" element={<Calendar />} />
+
 
       </Routes>
     </Router>
