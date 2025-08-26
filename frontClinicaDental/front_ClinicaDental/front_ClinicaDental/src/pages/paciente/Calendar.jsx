@@ -4,35 +4,74 @@ import interactionPlugin from "@fullcalendar/interaction"
 import timeGridPlugin from "@fullcalendar/timegrid"
 import esLocale from '@fullcalendar/core/locales/es'
 import React from 'react'
+import { useEffect, useState } from 'react'
+import axios from 'axios'
+
+
 
 export default function Calendar() {
     const handleDateClick = (arg) => {
         alert(arg.dateStr)
     }
 
+    const [eventos, setEventos] = useState([]);
+
+    useEffect(() => {
+        const token = localStorage.getItem('token');
+
+        axios.get("http://localhost:8080/citas/citas")
+            .then(response => {
+                const citasBackend = response.data.data;
+
+                console.log("Citas obtenidas:", citasBackend);
+                // transformamos las citas del backend al formato que necesita FullCalendar
+                const eventosFormateados = citasBackend.map(cita => {
+                    const [dia, mes, anyo] = cita.fecha.split("-");
+                    const fechaISO = `${anyo}-${mes}-${dia}`;
+
+                    return {
+
+                        title: cita.notas || "Cita médica",
+                        start: `${fechaISO}T${cita.hora}`,
+                        end: `${fechaISO}T${cita.horaFin}`,
+                        color: "#51d492",
+                        textColor: "black"
+                    };
+                })
+
+                setEventos(eventosFormateados);
+            })
+            .catch(error => {
+                console.error("Error al obtener las citas:", error);
+            });
+    }, []);
+
+
+    console.log("Eventos para FullCalendar:", eventos);
     return (
-        <FullCalendar
-            plugins={[dayGridPlugin, timeGridPlugin, interactionPlugin]}
-            initialView="timeGridWeek"
-            headerToolbar={{ left: 'prev,next today', center: 'title', right: 'dayGridMonth,dayGridWeek,dayGridDay' }}
-            weekends={true}
-            eventBackgroundColor='#8CE7F2'
-            eventTextColor='green'
-            eventBorderColor='red'
-            events={[
-                { title: 'Revisión', start: '2025-08-25T10:00:00', end: '2025-08-25T10:45:00' },
-                { title: 'Limpieza', start: '2025-08-26T12:00:00', end: '2025-08-26T12:30:00' }
-            ]}
-            locales={[esLocale]}
-            locale="es"
-            editable={true}
-            nowIndicator={true}
-            dateClick={handleDateClick}
-            eventClick={(info) => alert(info.event.title)}
-            select={(info) => alert(`Desde: ${info.startStr} Hasta: ${info.endStr}`)}
+        <div style={{ backgroundColor: "#305c6d", padding: "10px", borderRadius: "12px" }}>
+            <FullCalendar
+                plugins={[dayGridPlugin, timeGridPlugin, interactionPlugin]}
+                initialView="timeGridWeek"
+                headerToolbar={{ left: 'prev,next today', center: 'title', right: 'dayGridMonth,dayGridWeek,dayGridDay' }}
+                weekends={true}
+                eventBackgroundColor='#8CE7F2'
+                eventTextColor='green'
+                eventBorderColor='red'
+                events={eventos}
+                locales={[esLocale]}
+                locale="es"
+                editable={true}
+                nowIndicator={true}
+                dateClick={handleDateClick}
+                eventClick={(info) => alert(`Tiene "${info.event.title}" el dia ${info.event.start.toLocaleString()}`)}
+                select={(info) => alert(`Desde: ${info.startStr} Hasta: ${info.endStr}`)}
+                slotMinTime="08:00:00"
+                slotMaxTime="23:00:00"
 
 
-        />
+            />
+        </div>
     )
 }
 

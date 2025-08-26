@@ -28,7 +28,7 @@ function CitasPaciente() {
         <div>
             <NavPaciente />
 
-            <h2>Mis Historial de Citas</h2>
+            <h2>Mis Historial Completo de Citas</h2>
             {citas.length === 0 ? (
                 <p>No tienes ninguna cita registrada.</p>
             ) : (

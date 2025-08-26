@@ -177,6 +177,9 @@ public class PacienteController {
 
     }
 
+
+
+
     @PostMapping("/agendarcita")
     public ResponseEntity<ApiResponse<Cita>> agendarCita(@RequestBody Cita nuevaCita,
             Authentication authentication) {

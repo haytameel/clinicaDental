@@ -28,14 +28,14 @@ public class CitaController {
     public ResponseEntity<ApiResponse<List<Cita>>> listarTodasCitas(Authentication authentication) {
 
         String username = authentication.getName();
-        String rol=authentication.getAuthorities().toString();
+        String rol = authentication.getAuthorities().toString();
         // System.out.println("-----"+username+"-----"+rol);
 
         ApiResponse<List<Cita>> response;
         if (authentication.getAuthorities().stream()
-                .anyMatch(auth -> auth.getAuthority().equals("ROLE_PACIENTE") || auth.getAuthority().equals("ROLE_ADMIN"))  ) {
+                .anyMatch(auth -> auth.getAuthority().equals("ROLE_PACIENTE") || auth.getAuthority().equals("ROLE_ADMIN"))) {
             List<Cita> citas = citaService.getTodasCitasPorPaciente(username);
-            response=new ApiResponse<>("succes",
+            response = new ApiResponse<>("succes",
                     "Listado de citas obtenido correctamente",
                     citas);
             return ResponseEntity.ok(response);
@@ -44,18 +44,31 @@ public class CitaController {
         return ResponseEntity.status(HttpStatus.FORBIDDEN).body(response);
     }
 
+    @GetMapping("/citas")
+    public ResponseEntity<ApiResponse<List<Cita>>> listarTodasCitas() {
+
+
+        ApiResponse<List<Cita>> response;
+        List<Cita> citas = citaService.getTodasCitasPorPaciente("paciente");
+        response = new ApiResponse<>("succes",
+                "Listado de citas obtenido correctamente",
+                citas);
+        return ResponseEntity.ok(response);
+
+    }
+
     @GetMapping("/proximas")
     public ResponseEntity<ApiResponse<List<Cita>>> listarProximasCitas(Authentication authentication) {
 
         String username = authentication.getName();
-        String rol=authentication.getAuthorities().toString();
+        String rol = authentication.getAuthorities().toString();
         // System.out.println("-----"+username+"-----"+rol);
 
         ApiResponse<List<Cita>> response;
         if (authentication.getAuthorities().stream()
-                .anyMatch(auth -> auth.getAuthority().equals("ROLE_PACIENTE") || auth.getAuthority().equals("ROLE_ADMIN"))  ) {
+                .anyMatch(auth -> auth.getAuthority().equals("ROLE_PACIENTE") || auth.getAuthority().equals("ROLE_ADMIN"))) {
             List<Cita> citas = citaService.getCitasFuturasPorPaciente(username);
-            response=new ApiResponse<>("succes",
+            response = new ApiResponse<>("succes",
                     "Listado de citas obtenido correctamente",
                     citas);
             return ResponseEntity.ok(response);
@@ -68,14 +81,14 @@ public class CitaController {
     public ResponseEntity<ApiResponse<List<Cita>>> listarPasadasCitas(Authentication authentication) {
 
         String username = authentication.getName();
-        String rol=authentication.getAuthorities().toString();
+        String rol = authentication.getAuthorities().toString();
         // System.out.println("-----"+username+"-----"+rol);
 
         ApiResponse<List<Cita>> response;
         if (authentication.getAuthorities().stream()
-                .anyMatch(auth -> auth.getAuthority().equals("ROLE_PACIENTE") || auth.getAuthority().equals("ROLE_ADMIN"))  ) {
+                .anyMatch(auth -> auth.getAuthority().equals("ROLE_PACIENTE") || auth.getAuthority().equals("ROLE_ADMIN"))) {
             List<Cita> citas = citaService.getCitasPasadasPorPaciente(username);
-            response=new ApiResponse<>("succes",
+            response = new ApiResponse<>("succes",
                     "Listado de citas obtenido correctamente",
                     citas);
             return ResponseEntity.ok(response);
@@ -87,14 +100,14 @@ public class CitaController {
     @GetMapping("/prueba")
     public ResponseEntity<ApiResponse<String>> prueba() {
 
-        ApiResponse<String> response=new ApiResponse<>("succes",
+        ApiResponse<String> response = new ApiResponse<>("succes",
                 "Listado de citas obtenido correctamente",
-                "holaaaaaaaa");;
+                "holaaaaaaaa");
+        ;
 
-            return ResponseEntity.ok(response);
+        return ResponseEntity.ok(response);
 
     }
-
 
 
 }
