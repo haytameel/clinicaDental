@@ -30,10 +30,10 @@ export const NavPaciente = () => {
                     <nav>
                         <ul className={menuAbierto ? 'activo' : 'inactivo'}>
 
-                            <li><a href="#inicio" onClick={cerrarMenu}>Inicio</a></li>
+                            <li><a href="/paciente#inicio" onClick={cerrarMenu}>Inicio</a></li>
                             <li><a href="/paciente/citas/proximas" onClick={cerrarMenu}>Próximas Citas</a></li>
                             <li><a href="/paciente/citas/pasadas" onClick={cerrarMenu}>Citas pasadas</a></li>
-                            <li><a href="#pedircita" onClick={cerrarMenu}>Pedir Cita</a></li>
+                            <li><a href="/paciente/citas/pedircita" onClick={cerrarMenu}>Pedir Cita</a></li>
                             <li><a href="/paciente/citas" onClick={cerrarMenu}>Historial</a></li>
                             <li><a href="/paciente/mensajes" onClick={cerrarMenu}>Mensajes</a></li>
                             <li><a href="#ayuda" onClick={cerrarMenu}>Ayuda</a></li>

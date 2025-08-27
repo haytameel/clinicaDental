@@ -24,10 +24,12 @@ public class Cita {
     @Enumerated(EnumType.STRING)
     private TipoCita tipo;
 
-    private String estado;
+    @Enumerated(EnumType.STRING)
+    private EstadoCita estado;
+
     private String notas;
 
-    public Cita(int id, String paciente, String personal, Date fecha, Time hora, String estado, String notas, TipoCita tipo) {
+    public Cita(int id, String paciente, String personal, Date fecha, Time hora, EstadoCita estado, String notas, TipoCita tipo) {
         this.id = id;
         this.paciente = paciente;
         this.personal = personal;
@@ -82,11 +84,11 @@ public class Cita {
         this.hora = hora;
     }
 
-    public String getEstado() {
+    public EstadoCita getEstado() {
         return estado;
     }
 
-    public void setEstado(String estado) {
+    public void setEstado(EstadoCita estado) {
         this.estado = estado;
     }
 

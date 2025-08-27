@@ -6,6 +6,7 @@ import esLocale from '@fullcalendar/core/locales/es'
 import React from 'react'
 import { useEffect, useState } from 'react'
 import axios from 'axios'
+import Swal from "sweetalert2";
 
 
 
@@ -19,7 +20,11 @@ export default function Calendar() {
     useEffect(() => {
         const token = localStorage.getItem('token');
 
-        axios.get("http://localhost:8080/citas/citas")
+        axios.get("http://localhost:8080/citas", {
+            headers: {
+                Authorization: `Bearer ${token}`
+            }
+        })
             .then(response => {
                 const citasBackend = response.data.data;
 
@@ -31,7 +36,7 @@ export default function Calendar() {
 
                     return {
 
-                        title: cita.notas || "Cita médica",
+                        title: cita.notas || "Cita",
                         start: `${fechaISO}T${cita.hora}`,
                         end: `${fechaISO}T${cita.horaFin}`,
                         color: "#51d492",
@@ -53,6 +58,7 @@ export default function Calendar() {
             <FullCalendar
                 plugins={[dayGridPlugin, timeGridPlugin, interactionPlugin]}
                 initialView="timeGridWeek"
+                allDaySlot={false}
                 headerToolbar={{ left: 'prev,next today', center: 'title', right: 'dayGridMonth,dayGridWeek,dayGridDay' }}
                 weekends={true}
                 eventBackgroundColor='#8CE7F2'
@@ -61,11 +67,13 @@ export default function Calendar() {
                 events={eventos}
                 locales={[esLocale]}
                 locale="es"
-                editable={true}
+                editable={false}
+                //para seleccionar fechas
+                selectable={false}
+
                 nowIndicator={true}
-                dateClick={handleDateClick}
-                eventClick={(info) => alert(`Tiene "${info.event.title}" el dia ${info.event.start.toLocaleString()}`)}
-                select={(info) => alert(`Desde: ${info.startStr} Hasta: ${info.endStr}`)}
+                // dateClick={handleDateClick}
+                eventClick={(info) => alert(`Tienes "${info.event.title}" el dia ${info.event.start.toLocaleString()}`)}
                 slotMinTime="08:00:00"
                 slotMaxTime="23:00:00"
 
