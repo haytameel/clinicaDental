@@ -32,9 +32,9 @@ export const CitasProximasPaciente = () => {
         <div>
             <NavPaciente />
 
-            <h2>Mis Próximas citas</h2>
+            <h1>Mis Próximas citas</h1>
                    {citas.length === 0 ? (
-                <p>No tienes ninguna cita registrada en un futuro.</p>
+                <h2>No tienes ninguna cita registrada en un futuro.</h2>
             ) : (
                 <ul>
                     {citas.map((cita, index) => (
@@ -49,6 +49,7 @@ export const CitasProximasPaciente = () => {
                     ))}
                 </ul>
             )}
+            
         </div>
     )
 }

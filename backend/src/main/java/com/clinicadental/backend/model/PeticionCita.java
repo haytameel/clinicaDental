@@ -1,18 +1,27 @@
-package com.clinicadental.backend.dto;
+package com.clinicadental.backend.model;
 
-import com.clinicadental.backend.model.EstadoCita;
-import com.clinicadental.backend.model.TipoCita;
+import com.fasterxml.jackson.annotation.JsonFormat;
+import jakarta.persistence.*;
 
 import java.sql.Time;
 import java.util.Date;
-public class CitaRequest {
+
+@Entity
+@Table(name = "peticion_cita")
+public class PeticionCita {
+    @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    private int id;
 
     private String username;
 
+    @JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "dd-MM-yyyy")
     private Date fecha;
     private Time hora;
     private Time horaFin;
+    @Enumerated(EnumType.STRING)
     private TipoCita tipo;
+    @Enumerated(EnumType.STRING)
     private EstadoCita estado;
     private String notas;
 

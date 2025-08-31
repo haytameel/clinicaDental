@@ -132,16 +132,18 @@ export const PedirCita = () => {
                                 Swal.fire("Cita no registrada", "No se ha guardado ninguna cita", "error");
                                 return;
                             }
-                            if (result.isConfirmed) {
+                            if (result.isConfirmed && new Date(fecha) > new Date()) {
                                 const nuevaCita = result.value;
                                 const token = localStorage.getItem('token');
+                                const user = localStorage.getItem('username');
                                 const citaParaBackend = {
                                     fecha: fecha,           // fecha en formato yyyy-mm-dd
                                     hora: horaInicioSinZona,  // hora de inicio
                                     horaFin: horaFinSinZona,  // hora de fin, aunque habria que calcularla posteriormente
                                     tipo: nuevaCita.tipo,
                                     notas: nuevaCita.notas,
-                                    estado: nuevaCita.estado  // "PENDIENTE" lo tenemos por defecto
+                                    estado: nuevaCita.estado,  // "PENDIENTE" lo tenemos por defecto
+                                    username: user  // usuario del paciente que pide la cita
                                 };
                                 axios.post("http://localhost:8080/citas/solicitar", citaParaBackend, {
                                     headers: {
@@ -172,8 +174,12 @@ export const PedirCita = () => {
 
 
                             }
+                            else if (result.isConfirmed && new Date(fecha) <= new Date()) {
+                                Swal.fire("Error", "No se puede pedir una cita para hoy o días pasados", "error");
+                            }
                         })
-                            .catch(() => {
+                            .catch((error) => {
+                                console.error(error);
                                 Swal.fire("Error", "No se pudo guardar la cita", "error");
                             });
 

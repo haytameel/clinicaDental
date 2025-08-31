@@ -26,6 +26,16 @@ CREATE TABLE paciente (
     FOREIGN KEY (username) REFERENCES usuario(username) ON DELETE CASCADE
 );
 
+CREATE TABLE peticion_cita (
+                               id SERIAL PRIMARY KEY,
+                               username VARCHAR(255) NOT NULL,
+                               fecha DATE NOT NULL,
+                               hora TIME NOT NULL,
+                               hora_fin TIME NOT NULL,
+                               tipo VARCHAR(50) NOT NULL,
+                               estado VARCHAR(50) NOT NULL,
+                               notas TEXT
+);
 
 
 /* password es 123456*/

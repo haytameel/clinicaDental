@@ -2,16 +2,18 @@ package com.clinicadental.backend.controller;
 
 
 import com.clinicadental.backend.dto.ApiResponse;
+import com.clinicadental.backend.dto.CitaRequest;
+import com.clinicadental.backend.dto.SignupRequest;
 import com.clinicadental.backend.model.Cita;
+import com.clinicadental.backend.model.PeticionCita;
+import com.clinicadental.backend.repository.PeticionCitaRepository;
 import com.clinicadental.backend.service.CitaService;
+import com.clinicadental.backend.service.PeticionCitaService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.core.Authentication;
-import org.springframework.web.bind.annotation.CrossOrigin;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 
@@ -22,6 +24,9 @@ public class CitaController {
 
     @Autowired
     private CitaService citaService;
+
+    @Autowired
+    private PeticionCitaService peticionCitaService;
 
 
     @GetMapping
@@ -109,5 +114,46 @@ public class CitaController {
 
     }
 
+    @PostMapping("/solicitar")
+    public ResponseEntity<String> solicitar(@RequestBody CitaRequest citaRequest, Authentication authentication) {
+        String username = authentication.getName();
+        String rol = authentication.getAuthorities().toString();
+        if (authentication.getAuthorities().stream()
+                .anyMatch(auth -> auth.getAuthority().equals("ROLE_PACIENTE") || auth.getAuthority().equals("ROLE_ADMIN")) && citaRequest.getUsername().equals(username)) {
+            try {
+                peticionCitaService.save(citaRequest);
+                return ResponseEntity.ok("Solicitud de cita presentada correctamente");
 
+
+            } catch (Exception e) {
+                return ResponseEntity.badRequest().body(e.getMessage());
+            }
+        } else {
+            return ResponseEntity.badRequest().body("No dispones de los permisos para hacer la petición");
+        }
+
+    }
+
+    @GetMapping("/peticiones")
+    public ResponseEntity<ApiResponse<List<PeticionCita>>> getPeticiones(Authentication authentication) {
+        String username = authentication.getName();
+        String rol = authentication.getAuthorities().toString();
+        ApiResponse<List<PeticionCita>> response;
+        if (authentication.getAuthorities().stream()
+                .anyMatch(auth -> auth.getAuthority().equals("ROLE_PACIENTE") || auth.getAuthority().equals("ROLE_ADMIN"))) {
+            try {
+                List<PeticionCita> res=peticionCitaService.getPeticionesUsuario(username);
+                response= new ApiResponse<>("succes", "Listado de peticiones hechas por"+username,res);
+                return ResponseEntity.ok(response);
+
+            } catch (Exception e) {
+                response = new ApiResponse<>("error", e.getMessage(), null);
+
+            }
+        } else {
+            response = new ApiResponse<>("error","No dispones de los permisos para hacer la petición", null);
+        }
+
+        return ResponseEntity.status(HttpStatus.FORBIDDEN).body(response);
+    }
 }
