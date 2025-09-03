@@ -10,7 +10,7 @@ import CitasProximasPaciente from './pages/paciente/CitasProximasPaciente.jsx';
 import CitasPasadasPaciente from './pages/paciente/CitasPasadasPaciente.jsx';
 import Calendar from './pages/paciente/Calendar.jsx';
 import PedirCita from './pages/paciente/pedirCita.jsx';
-
+import { Prueba } from './Prueba.jsx';
 function App() {
   //definimos nuestras rutas a los componentes
   return (
@@ -26,6 +26,7 @@ function App() {
         <Route path="/paciente/miperfil" element={<MiPerfilPaciente />} />
         <Route path="/paciente/calendario" element={<Calendar />} />
         <Route path="/paciente/citas/pedirCita" element={<PedirCita />} />
+        <Route path="/prueba" element={<Prueba />} />
 
 
 

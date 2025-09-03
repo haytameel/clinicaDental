@@ -1,5 +1,6 @@
 import React, { useState } from 'react';
 import "../../styles/style.css";
+import { useEffect } from 'react';
 export const NavVisitante = () => {
     const [menuAbierto, setMenuAbierto] = useState(false);
 
@@ -10,6 +11,15 @@ export const NavVisitante = () => {
     const cerrarMenu = () => {
         setMenuAbierto(false);
     };
+
+    //para ocultar textoinio al abrir el menu
+    useEffect(() => {
+        if (menuAbierto) {
+            document.body.classList.add("menu-open");
+        } else {
+            document.body.classList.remove("menu-open");
+        }
+    }, [menuAbierto]);
 
     return (
         <div className="navbar">

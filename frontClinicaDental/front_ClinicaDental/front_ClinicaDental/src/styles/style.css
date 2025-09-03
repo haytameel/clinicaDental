@@ -8,7 +8,7 @@ html {
 }
 
 body {
-        color: white;
+    color: white;
     background-color: #2b2b2b;
     height: 100vh;
     overflow-x: hidden;
@@ -71,7 +71,14 @@ ul.activo {
     border-radius: 8px;
 }
 
-@media (min-width: 850px) {
+/*desaparecer texto inicio al abrir el menu*/
+body.menu-open .textoinicio {
+    opacity: 0;
+    visibility: hidden;
+    pointer-events: none;
+}
+
+@media (min-width: 900px) {
     .menu-toggle {
         display: none;
     }
@@ -82,6 +89,12 @@ ul.activo {
         flex-direction: row;
         gap: 20px;
         background-color: transparent;
+    }
+}
+
+@media (max-width: 900px) {
+    .textoinicio h1 {
+        z-index: -1;
     }
 }
 
@@ -117,8 +130,9 @@ ul.activo {
     transform: translate(-50%, -50%);
     background: transparent;
     font-weight: bold;
-    transition: opacity 0.8s ease-in-out;
-
+    opacity: 1;
+    visibility: visible;
+    transition: opacity 0.5s ease, visibility 0.5s ease;
 }
 
 h1 {
@@ -139,7 +153,6 @@ h1 {
     /* Evita la distorsión ajustando la imagen */
     object-position: center;
     filter: brightness(0.5)
-
 }
 
 /*SERVICIOS*/
@@ -302,7 +315,10 @@ h1 {
     padding-top: 1rem;
     scale: 2.8;
 }
-
+.contacto-container a svg {
+  color: #fff;      
+  transition: color 0.3s ease;
+}
 .contacto-container a {
     justify-content: space-between;
     margin: 10px;
@@ -335,7 +351,7 @@ h1 {
 }
 
 /*contacto*/
-form{
+form {
     margin-top: 2rem;
 }
 
@@ -351,7 +367,7 @@ form{
     background-color: #3a5661;
 }
 
-textarea {
+.formulario textarea {
     border: #3a5661 solid 2px;
     border-radius: 10px;
     text-align: left;
@@ -363,6 +379,27 @@ textarea {
     background-color: #3a5661;
 
 }
+
+
+
+@media (max-width: 580px) {
+  footer {
+    margin-top: 10rem; 
+  }
+}
+
+@media (min-width: 581px) {
+  footer {
+    margin-top: 6rem;
+  }
+}
+
+@media (min-width: 1300px) {
+  footer {
+    margin-top: 0rem;
+  }
+}
+
 
 /*EFECTO DEL BOTON*/
 .boton {
@@ -406,14 +443,12 @@ textarea {
 
 
 /*FOOTER*/
-footer{
-  text-align: center;
-  padding-bottom: 10px;
-  font-family: Rubik;
+footer {
+    text-align: center;
+    padding-bottom: 10px;
+    font-family: Rubik;
 }
 
 
 
 /*----------------------------PACIENTE-----------------------------------*/
-
-

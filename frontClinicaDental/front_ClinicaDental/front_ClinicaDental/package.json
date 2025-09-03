@@ -18,7 +18,7 @@
     "@fullcalendar/timegrid": "^6.1.19",
     "@react-login-page/page1": "^1.0.6",
     "axios": "^1.11.0",
-    "bootstrap": "^5.3.7",
+    "bootstrap": "^5.3.8",
     "framer-motion": "^12.23.12",
     "gsap": "^3.13.0",
     "jwt-decode": "^4.0.0",
