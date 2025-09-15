@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from 'react';
 import axios from 'axios';
 import NavPaciente from './NavPaciente';
-
+import { DataGrid } from '@mui/x-data-grid';
 
 export const CitasProximasPaciente = () => {
 
@@ -25,6 +25,44 @@ export const CitasProximasPaciente = () => {
             });
     }, []);
 
+    //  columnas para el DataGrid
+    const columns = [
+        { field: 'id', headerName: 'ID', flex: 0.5 },
+        { field: 'fecha', headerName: 'Fecha',  flex: 1 },
+        { field: 'hora', headerName: 'Desde',  flex: 1 },
+        { field: 'horaFin', headerName: 'Hasta',  flex: 1 },
+        { field: 'personal', headerName: 'Dr./Dra.',  flex: 1},
+        { field: 'notas', headerName: 'Descripción',  flex: 2 },
+        {
+            field: 'estado', headerName: 'Estado',  flex: 1,
+            renderCell: (params) => (
+                <span
+                    style={{
+                        color:
+                            params.value === 'PENDIENTE'
+                                ? 'orange'
+                                : params.value === 'CONFIRMADA'
+                                    ? 'green'
+                                    : 'red',
+                        fontWeight: 'bold',
+                    }}
+                >
+                    {params.value}
+                </span>
+            ),
+        },
+    ];
+
+    // añadir un "id" único (necesario para DataGrid)
+    const rows = citas.map((cita, index) => ({
+        id: index + 1,
+        fecha: cita.fecha,
+        hora: cita.hora,
+        horaFin: cita.horaFin,
+        personal: cita.personal,
+        notas: cita.notas,
+        estado: cita.estado,
+    }));
 
 
     return (
@@ -32,24 +70,40 @@ export const CitasProximasPaciente = () => {
         <div>
             <NavPaciente />
 
-            <h1>Mis Próximas citas</h1>
-                   {citas.length === 0 ? (
+            <h1 style={{textAlign:'center', marginTop:'20px'}}>Mis Próximas citas</h1>
+            {citas.length === 0 ? (
                 <h2>No tienes ninguna cita registrada en un futuro.</h2>
             ) : (
-                <ul>
-                    {citas.map((cita, index) => (
-                        <li key={index}>
-                            <strong>Fecha:</strong> {cita.fecha} <br />
-                             <strong>Desde:</strong> {cita.hora} <strong>Hasta:</strong> {cita.horaFin}<br />
-                             <strong>Dr./Dra.</strong> {cita.horaFin}<br />
-                            <strong>Estado:</strong> {cita.personal} <br />
-                            <strong>Descripción:</strong> {cita.notas}
-                            <br /> <br />
-                        </li>
-                    ))}
-                </ul>
+                <div >
+                    <DataGrid
+                        rows={rows}
+                        columns={columns}
+                        pageSize={5}
+                        rowsPerPageOptions={[5, 10]}
+                        disableSelectionOnClick
+                        getRowClassName={(params) => {
+                            if (params.row.estado === 'PENDIENTE') return 'fila-pendiente';
+                            if (params.row.estado === 'CONFIRMADA') return 'fila-confirmada';
+                            if (params.row.estado === 'FINALIZADA') return 'fila-cancelada';
+                            return '';
+                        }}
+                        sx={{
+                            backgroundColor: "#f0f8ff",
+                            boxShadow: 2,
+                            "& .MuiDataGrid-columnHeaders": {
+                                backgroundColor: "#1976d2", // no va
+                                fontWeight: "bold",
+                                fontSize: "16px",
+                            },
+                            maxWidth: '85%',
+                            display: 'flex',
+                            justifyContent: 'center',
+                            margin: '0 auto',
+                        }}
+                    />
+                </div>
             )}
-            
+
         </div>
     )
 }

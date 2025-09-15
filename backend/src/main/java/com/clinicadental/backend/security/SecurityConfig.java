@@ -1,4 +1,4 @@
-package com.clinicadental.backend.config;
+package com.clinicadental.backend.security;
 
 import com.clinicadental.backend.security.JwtAuthenticationFilter;
 import com.clinicadental.backend.service.JwtService;

@@ -78,7 +78,7 @@ body.menu-open .textoinicio {
     pointer-events: none;
 }
 
-@media (min-width: 900px) {
+@media (min-width: 1220px) {
     .menu-toggle {
         display: none;
     }
@@ -140,6 +140,9 @@ h1 {
     color: #8CE7F2;
     background-color: transparent;
     font-weight: bold;
+}
+h1 span {
+    color: white;
 }
 
 .spantitulo {
@@ -452,3 +455,17 @@ footer {
 
 
 /*----------------------------PACIENTE-----------------------------------*/
+/*PARA EL GRID DE LAS CITAS*/
+.fila-pendiente {
+  background-color: rgba(255, 165, 0, 0.2); /* naranja suave */
+}
+
+.fila-confirmada {
+  background-color: rgba(144, 238, 144, 0.3); /* verde suave */
+}
+
+.fila-cancelada {
+  background-color: rgba(255, 99, 71, 0.2); /* rojo suave */
+}
+
+
