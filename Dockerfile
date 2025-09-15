@@ -8,13 +8,14 @@ RUN apk add --no-cache maven
 WORKDIR /app
 
 # Copiar pom.xml y descargar dependencias (cache eficiente)
-COPY backend/pom.xml backend/mvnw backend/.mvn/ ./backend/
+COPY backend/pom.xml ./backend/
 WORKDIR /app/backend
-RUN ./mvnw dependency:go-offline
+RUN mvn dependency:go-offline
+
 
 # Copiar el resto del proyecto y compilar
 COPY backend/ /app/backend/
-RUN ./mvnw clean package -DskipTests
+RUN mvn clean package -DskipTests
 
 # ---------- Stage 2: runtime ----------
 FROM eclipse-temurin:19-jdk-alpine
