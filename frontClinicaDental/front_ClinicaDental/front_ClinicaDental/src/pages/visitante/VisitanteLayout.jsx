@@ -1,4 +1,4 @@
-import NavVisitante from './navVisitante.jsx';
+import NavVisitante from './NavVisitante.jsx';
 import HomeVisitante from './HomeVisitante.jsx';
 import React from 'react';
 const VisitanteLayout = () => {
