@@ -12,7 +12,7 @@ import org.springframework.web.bind.annotation.RestController;
 
 public class HomeController {
 
-    @RequestMapping(value = {"/{path:[^\\.]*}", "/**/{path:[^\\.]*}"})
+    @RequestMapping(value = {"/{path:[^\\.]*}", "/{path:^(?!api$).*$}/**"})
     public String redirect() {
         // Renderizar siempre index.html para rutas del frontend
         return "forward:/index.html";
