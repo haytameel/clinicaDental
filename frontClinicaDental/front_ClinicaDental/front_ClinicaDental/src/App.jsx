@@ -9,7 +9,7 @@ import MiPerfilPaciente from './pages/paciente/MiPerfilPaciente.jsx';
 import CitasProximasPaciente from './pages/paciente/CitasProximasPaciente.jsx';
 import CitasPasadasPaciente from './pages/paciente/CitasPasadasPaciente.jsx';
 import Calendar from './pages/paciente/Calendar.jsx';
-import PedirCita from './pages/paciente/pedirCita.jsx';
+import PedirCita from './pages/paciente/PedirCita.jsx';
 import { Prueba } from './Prueba.jsx';
 function App() {
   //definimos nuestras rutas a los componentes
