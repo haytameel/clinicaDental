@@ -26,7 +26,7 @@ public class AuthController {
             return ResponseEntity.ok("Petición hecha correctamente!!!");
 
     }
-    /*Lo dejaremos mas adelante solo para el adin*/
+    /*Lo dejaremos mas adelante solo para el admin; registra a personal y pacientes*/
     @PostMapping("/register")
     public ResponseEntity<?> register(@RequestBody SignupRequest request) {
         try {
