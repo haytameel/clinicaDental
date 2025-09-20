@@ -21,7 +21,7 @@ public class AuthController {
     private PacienteRepository pacienteRepository;
 
     @GetMapping("/prueba")
-    public ResponseEntity<?> prueba (@RequestBody SignupRequest request) {
+    public ResponseEntity<?> prueba () {
 
             return ResponseEntity.ok("Petición hecha correctamente!!!");
 
