@@ -7,10 +7,7 @@ import com.clinicadental.backend.repository.PacienteRepository;
 import com.clinicadental.backend.service.AuthService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 import java.util.Map;
 
@@ -23,6 +20,12 @@ public class AuthController {
     @Autowired
     private PacienteRepository pacienteRepository;
 
+    @GetMapping("/prueba")
+    public ResponseEntity<?> prueba (@RequestBody SignupRequest request) {
+
+            return ResponseEntity.ok("Petición hecha correctamente!!!");
+
+    }
     /*Lo dejaremos mas adelante solo para el adin*/
     @PostMapping("/register")
     public ResponseEntity<?> register(@RequestBody SignupRequest request) {
