@@ -4,21 +4,21 @@ import axios from 'axios';
 import NavPaciente from './NavPaciente';
 import Calendar from './Calendar';
 
-const token = localStorage.getItem('token');
-const username = localStorage.getItem('username');
 
-
-// redirige al home/login
-const navigate = useNavigate();
-useEffect(() => {
-        if (!token) {
-            navigate('/'); 
-        }
-    }, [token, navigate]);
 
 export const HomePaciente = () => {
 
+    const token = localStorage.getItem('token');
+    const username = localStorage.getItem('username');
 
+
+    // redirige al home/login
+    const navigate = useNavigate();
+    useEffect(() => {
+        if (!token) {
+            navigate('/');
+        }
+    }, [token, navigate]);
 
     return (
         <>

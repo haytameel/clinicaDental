@@ -10,6 +10,8 @@ import CitasProximasPaciente from './pages/paciente/CitasProximasPaciente.jsx';
 import CitasPasadasPaciente from './pages/paciente/CitasPasadasPaciente.jsx';
 import Calendar from './pages/paciente/Calendar.jsx';
 import PedirCita from './pages/paciente/PedirCita.jsx';
+import { SpeedInsights } from "@vercel/speed-insights/react"
+
 import { Prueba } from './Prueba.jsx';
 function App() {
   //definimos nuestras rutas a los componentes

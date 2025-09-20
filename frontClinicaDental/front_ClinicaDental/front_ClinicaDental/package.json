@@ -21,6 +21,7 @@
     "@mui/material": "^7.3.2",
     "@mui/x-data-grid": "^8.11.1",
     "@react-login-page/page1": "^1.0.6",
+    "@vercel/speed-insights": "^1.2.0",
     "axios": "^1.11.0",
     "bootstrap": "^5.3.8",
     "framer-motion": "^12.23.12",
