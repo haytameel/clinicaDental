@@ -53,8 +53,9 @@ export const PedirCita = () => {
         <div>
             <NavPaciente />
             <h1 style={{ textAlign: "center", marginTop: "20px" }}>Pide Cita</h1>
-            <div style={{ backgroundColor: "#305c6d", padding: "10px", borderRadius: "12px" }}>
+            <div style={{ backgroundColor: "#305c6d", padding: "10px", borderRadius: "12px",  maxWidth: "80%" , margin: "0 auto", marginTop: "40px" }}>
                 <FullCalendar
+                
                     plugins={[dayGridPlugin, timeGridPlugin, interactionPlugin]}
                     initialView="timeGridWeek"
                     allDaySlot={false}

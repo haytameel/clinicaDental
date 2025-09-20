@@ -2,6 +2,7 @@ import axios from 'axios';
 import { jwtDecode } from "jwt-decode";
 import React, { useState } from 'react';
 import "./styles/login.css";
+import NavVisitante from '../src/pages/visitante/NavVisitante.jsx';
 
 
 
@@ -34,21 +35,21 @@ export const Login = () => {
                 //guardamos el token
                 const token = response.data.token;
                 localStorage.setItem('token', token);
-                localStorage.setItem('username', response.data.username); 
+                localStorage.setItem('username', response.data.username);
                 console.log('Token guardado en localStorage:', token);
                 console.log('Username', response.data.username);
 
                 //TIPO DE USUARIO
                 const decoded = jwtDecode(token);
                 const rol = decoded.rol;
-                const username=decoded.sub;
+                const username = decoded.sub;
                 console.log('Rol del usuario:', rol);
                 console.log('ID del usuario:', username);
                 // Redirigimos según el rol del usuario
                 if (rol === 'ADMIN') window.location.href = '/admin';
                 else if (rol === 'PERSONAL') window.location.href = '/personal';
                 else
-                window.location.href = '/paciente'; 
+                    window.location.href = '/paciente';
 
             }).catch(error => {
                 setErrorMsg('Usuario o contraseña incorrectos'); // mostramos error
@@ -58,29 +59,34 @@ export const Login = () => {
     }
 
     return (
-        <div className="login-page">
-            <div className='login-izq'>
 
-                <h1>Bienvenido a tu <br />
-                    <span>espacio personal</span>
-                </h1>
+        <>
+                    <NavVisitante />
 
-                <p >
-                    Gestiona tus citas, consulta tus radiografías/documentos, consulta los procesos y habla directamente con tu dentista.
-                    Todo en un solo lugar, seguro y accesible. Estamos aquí para cuidar de tu sonrisa.
-                    Recuerda que si no dispones de una cuenta, puedes registrarte gratuitamente.
-                </p>
+            <div className="login-page">
 
-            </div>
-            <div className='login-der'>
-                <form onSubmit={handleSubmit}>
-                    <h2>Introduce tus datos</h2>
-                    {errorMsg && (
-                        <div style={{ color: 'red', marginBottom: '1rem', backgroundColor: 'transparent', fontWeight: 'bold' }}>
-                            {errorMsg}
-                        </div>
-                    )}
-                    {/*  ES LO MISMO QUE LO DE ARRIBA, PERO CON UN IF TERNARIO
+                <div className='login-izq'>
+
+                    <h1>Bienvenido a tu <br />
+                        <span>espacio personal</span>
+                    </h1>
+
+                    <p >
+                        Gestiona tus citas, consulta tus radiografías/documentos, consulta los procesos y habla directamente con tu dentista.
+                        Todo en un solo lugar, seguro y accesible. Estamos aquí para cuidar de tu sonrisa.
+                        Recuerda que si no dispones de una cuenta, puedes registrarte gratuitamente.
+                    </p>
+
+                </div>
+                <div className='login-der'>
+                    <form onSubmit={handleSubmit}>
+                        <h2>Introduce tus datos</h2>
+                        {errorMsg && (
+                            <div style={{ color: 'red', marginBottom: '1rem', backgroundColor: 'transparent', fontWeight: 'bold' }}>
+                                {errorMsg}
+                            </div>
+                        )}
+                        {/*  ES LO MISMO QUE LO DE ARRIBA, PERO CON UN IF TERNARIO
                                 if (errorMsg) {
                                     return <div style={{ color: 'red', marginBottom: '1rem' }}>{errorMsg}</div>
                                     } else {
@@ -89,36 +95,39 @@ export const Login = () => {
 
                                 */}
 
-                    <input
-                        label='Usuario'
-                        name='username'
-                        value={formData.username}
-                        onChange={handleChange}
-                        required
-                    ></input>
+                        <input
+                            placeholder='Usuario'
+                            label='Usuario'
+                            name='username'
+                            value={formData.username}
+                            onChange={handleChange}
+                            required
+                        ></input>
 
-                    <input
-                        label='Contraseña'
-                        type='password'
-                        name='password'
-                        value={formData.password}
-                        onChange={handleChange}
-                        required
-                    ></input>
+                        <input
+                            placeholder='Contraseña'
+                            label='Contraseña'
+                            type='password'
+                            name='password'
+                            value={formData.password}
+                            onChange={handleChange}
+                            required
+                        ></input>
 
-                    <button className="boton" type='submit'>INICIAR SESIÓN</button>
+                        <button className="boton" type='submit'>INICIAR SESIÓN</button>
 
-                    <div>
-                        <h5> <a href='/signup'>O REGÍSTRATE</a>
-                            
+                        <div>
+                            <h5> <a href='/signup'>O REGÍSTRATE</a>
+
                             </h5>
-                    </div>
+                        </div>
 
-                </form>
+                    </form>
 
 
+                </div>
             </div>
-        </div>
+            </>
     );
 }
 

@@ -32,7 +32,7 @@ export const HomePaciente = () => {
                 </div>
             </section>
 
-            <section className="proximascitas" id="proximascitas">
+            <section className="proximascitas" id="proximascitas" style={{ maxWidth: "80%" , margin: "0 auto", marginTop: "40px", marginBottom: "40px"}}>
                 <h1 style={{ textAlign: "center" }} >Calendario</h1>
                 <Calendar />
             </section>
