@@ -1,4 +1,5 @@
-import React from 'react'
+import React, { useEffect } from 'react';
+import { useNavigate } from 'react-router-dom';
 import axios from 'axios';
 import NavPaciente from './NavPaciente';
 import Calendar from './Calendar';
@@ -6,6 +7,14 @@ import Calendar from './Calendar';
 const token = localStorage.getItem('token');
 const username = localStorage.getItem('username');
 
+
+// redirige al home/login
+const navigate = useNavigate();
+useEffect(() => {
+        if (!token) {
+            navigate('/'); 
+        }
+    }, [token, navigate]);
 
 export const HomePaciente = () => {
 
@@ -24,8 +33,8 @@ export const HomePaciente = () => {
             </section>
 
             <section className="proximascitas" id="proximascitas">
-                <h1 style={{textAlign:"center"}} >Calendario</h1>
-                    <Calendar/>
+                <h1 style={{ textAlign: "center" }} >Calendario</h1>
+                <Calendar />
             </section>
 
         </>
